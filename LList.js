@@ -38,6 +38,40 @@
 	// LList constructor
 	var LList = function() {
 		this.head = null;
+		this.count = 0;
+	};
+	
+	/*
+	 * Iterates over the complete list
+	 * @param {Function} callFunc The function to be called for each node in the list
+	 * * INFO: if callFunc returns non undefined the loop will break and the return value will be returned!
+	 * * @this Will be the same list context reference
+	 * * @args {Object} The current node
+	 * * @args {Number} The current node's list index
+	 */
+	LList.prototype.forEach = function( callFunc ) {
+		if ( !this.head ) return;
+		var node = this.head;
+		var index = 0;
+		while( node ) {
+			var returnValue = callFunc.call( this, node, index++ );
+			if ( typeof returnValue !== "undefined" ) return returnValue;	// return 
+			node = node.next;
+		}
+	};
+	
+	/*
+	 * Get the last node in the list
+	 * @return {Object|Null} The last node in the list or null
+	 */
+	LList.prototype.getLastNode = function() {
+		if ( !this.head ) return null;
+		if ( !this.head.next ) return this.head;
+		var node = this.head.next;
+		while( node.next ) {
+			node = node.next;
+		}
+		return node;
 	};
 	
 	/*
@@ -49,13 +83,11 @@
 		if ( !this.head ) {
 			this.head = node;
 		} else {
-			var lastNode = this.head;
-			while( lastNode.next ) {
-				lastNode = lastNode.next;
-			}
+			var lastNode = this.getLastNode();
 			lastNode.next = node;
 			lastNode.next.prev = lastNode;
 		}
+		this.count++;
 	};
 	
 	/*
@@ -67,24 +99,24 @@
 		if ( !this.head ) {
 			this.head = node;
 		} else {
-			var headCache = this.head;
+			var headNodeCache = this.head;
 			this.head = node;
-			this.head.next = headCache;
+			this.head.next = headNodeCache;
 			this.head.next.prev = this.head;
 		}
+		this.count++;
 	};
 	
 
 	/*
 	 * Remove all nodes with a given value
-	 * @param {*} data The value to match against the list
+	 * @param {*} search The value to match against the list
 	 * @param {Number} max
 	 */
-	LList.prototype.remove = function( data, max ) {
+	LList.prototype.remove = LList.prototype.delete = function( search, max ) {
 		max = ( typeof max !== "undefined" && max > 0 ) ? max : Number.MAX_VALUE;
-		var node = this.head;
-		while( node ) {
-			if ( node.data == data ) {
+		this.forEach( function( node, index ) {
+			if ( node.data == search ) {
 				if ( !node.prev ) {
 					this.head = node.next;
 					this.head.prev = null;
@@ -94,36 +126,38 @@
 						node.next.prev = node.prev;
 					}
 				}
+				this.count--;
 			}
-			if ( --max <= 0 ) break;
-			node = node.next;
-		}
+			if ( --max <= 0 ) return true; // break the loop
+		});
 	};
 	
 	/*
-	 * Remove the last node of the list
-	 * @return {Object|Null} LList node object or null
+	 * Remove the last node of the list and returns it
+	 * @return {Object|Null} The removed node or null
 	 */
 	LList.prototype.pop = function() {
-		if ( !this.head ) return null;
-		var lastNode = this.head;
-		while( lastNode.next ) {
-			lastNode = lastNode.next;
+		var lastNode = this.getLastNode();
+		if ( lastNode ) {
+			lastNode.prev.next = null;
+			this.count--;
 		}
-		lastNode.prev = null;
 		return lastNode;
 	};
 	
 	/*
-	 * Remove the first node of the list
-	 * @return {Object|Null} LList node object or null
+	 * Remove the first node of the list and returns it
+	 * @return {Object|Null} The removed node or null
 	 */
 	LList.prototype.shift = function() {
 		if ( !this.head ) return null;
-		var nodeCache = this.head;
+		var headNodeCache = this.head;
 		this.head = this.head.next;
-		this.head.prev = null;
-		return nodeCache;
+		if ( this.head ) {
+			this.head.prev = null;
+		}
+		this.count--;
+		return headNodeCache;
 	};
 	
 	/*
@@ -132,17 +166,18 @@
 	 */
 	LList.prototype.concat = function( list ) {
 		if ( !isList( list ) ) {
-			throw "LList.concat: input list is not a valid LList";
+			throw "LList::concat: invalid LList:list argument";
 		}
 		if ( !list.head ) return;
-		var lastNode = this.head;
+		var lastNode = this.getLastNode();
 		if ( lastNode ) {
-			while( lastNode.next ) {
-				lastNode = lastNode.next;
-			}
+			lastNode.next = list.head;
+			lastNode.next.prev = lastNode;
+			this.count += list.count;
+		} else {
+			this.head = list.head;
+			this.count = list.count;
 		}
-		lastNode.next = list.head;
-		lastNode.next.prev = lastNode;
 	}
 	
 	/*
@@ -151,52 +186,42 @@
 	 * @return {Object|Null} A LList node or null
 	 */
 	LList.prototype.search = function( data ) {
-		var node = this.head;
-		while( node ) {
+		return this.forEach( function( node ) {
 			if ( node.data == data ) {
 				return node;
 			}
-			node = node.next;
-		}
-		return null;
+		}) || null;
 	};
 	
 	/*
 	 * Reverse the list
 	 */
 	LList.prototype.reverse = function() {
-		if ( !this.head || !this.head.next ) return;
-		var reverseList = new LList;
-		var node = this.head;
-		while( node ) {
-			reverseList.unshift( node.data );
+		var rList = new LList; 
+		this.forEach(function( node ) {
+			rList.unshift( node.data );
 			if ( node.prev ) {
 				node.prev.prev = null;
 				node.prev.next = null;
 			}
-			node = node.next;
-		}
-		this.head = reverseList.head;
+		});
+		this.head = rList.head;
 	};
 	
 	/*
 	 * Sort the list ( a < b )
 	 */
 	LList.prototype.sort = function() {
-		if ( !this.head || !this.head.next ) return;
-		var lastNode = this.head.next;
-		while( lastNode ) {
-			var prevNode = lastNode.prev;
-			var sortNode = lastNode;
-			while( prevNode && sortNode.data < prevNode.data ) {
+		this.forEach(function( node ) {
+			var prevNode = node.prev;
+			while( prevNode && node.data < prevNode.data ) {
 				var prevDataCache = prevNode.data;
-				prevNode.data = sortNode.data;
-				sortNode.data = prevDataCache;
-				sortNode = prevNode;
+				prevNode.data = node.data;
+				node.data = prevDataCache;
+				node = prevNode;
 				prevNode = prevNode.prev;
 			}
-			lastNode = lastNode.next;
-		}
+		});
 	};
 	
 	if ( noGlobal ) {

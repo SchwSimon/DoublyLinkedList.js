@@ -78,7 +78,7 @@
 	 * Adds a node at the end of the list
 	 * @param {*} data The node data
 	 */
-	LList.prototype.push = LList.prototype.add = function( data ) {
+	LList.prototype.push = function( data ) {
 		var node = createNode( data );
 		if ( !this.head ) {
 			this.head = node;
@@ -113,7 +113,7 @@
 	 * @param {*} search The value to match against the list
 	 * @param {Number} max
 	 */
-	LList.prototype.remove = LList.prototype.delete = function( search, max ) {
+	LList.prototype.remove = function( search, max ) {
 		max = ( typeof max !== "undefined" && max > 0 ) ? max : Number.MAX_VALUE;
 		this.forEach( function( node, index ) {
 			if ( node.data == search ) {

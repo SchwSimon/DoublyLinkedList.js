@@ -6,7 +6,7 @@ Doubly linked list class
 ## Documentation
 
 - List properties
-> **head** The first node in the list
+> **head** The first node in the list  
 > **count** The list node count
 ```js
 var list = new LList;
@@ -15,7 +15,7 @@ list.count;
 ```
 
 - Adding nodes
-> **push()** Add a node at the end of the list
+> **push()** Add a node at the end of the list  
 > **unshift()** Add a node at the beginning of the list
 ```js
 var list = new LList;
@@ -24,8 +24,8 @@ list.unshift( 2 ); // {2,1}
 ```
 
 - Removing nodes
-> **pop()** remove and return the last node
-> **shift()** remove and return the first node
+> **pop()** remove and return the last node  
+> **shift()** remove and return the first node  
 > **remove()** remove nodes by its data value
 ```js
                   // {1,2,5,2,4}

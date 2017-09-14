@@ -127,8 +127,8 @@
 					}
 				}
 				this.count--;
+				if ( --max <= 0 ) return true; // break the loop
 			}
-			if ( --max <= 0 ) return true; // break the loop
 		});
 	};
 	

@@ -56,6 +56,7 @@ list_a.sort();            // {1,2,3,4}
 > **search()** Search and returns the first node which data non strictly equals the search value  
 > **getLastNode()** Returns the last node in the list  
 > **forEach()** Iterates over the complete list as long as no non-undefined return occurs.
+> **filter()** Creates a new LList with all nodes that pass the test implemented by the provided function
 ```js
 var list = new LList;
 // ... {1,2,3,4}
@@ -69,4 +70,9 @@ list.forEach(function( node, index ) {
   /// A return; statement which does NOT return undefined
   /// stops the loop and forEach() will return the return value!
 });
+
+var filteredList = list.fiter(function( node, index ) {
+  return node.data <= 2;
+}/* [, thisArg] */);
+// filteredList: {1,2}
 ```

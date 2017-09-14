@@ -76,3 +76,11 @@ var filteredList = list.fiter(function( node, index ) {
 }/* [, thisArg] */);
 // filteredList: {1,2}
 ```
+
+- Static methods
+> **isList()** Determines whether the passed value is an LList
+```js
+var list = LList;
+LList.isList( list );     // true
+LList.isList( [1,2,3] );  // false
+```

@@ -28,7 +28,8 @@ list.unshift( 2 ); // {2,1}
 > **shift()** remove and return the first node  
 > **remove()** remove nodes by its data value
 ```js
-                  // {1,2,5,2,4}
+var list = new LList;
+// ... {1,2,5,2,4}
 list.pop();       // {1,2,5,2}
 list.shift();     // {2,5,2}
 list.remove( 2 ); // {5} 
@@ -36,25 +37,36 @@ list.remove( 2 ); // {5}
 // by passing a second {Number} argument you can set the maximum of remove operations allowed
 ```
 
-
-
+- Manipulating list
+> **concat()** merge an LList with another one  
+> **reverse()** reverse the list  
+> **sort()** sort the list (a < b)
 ```js
+var list_a = new LList;
+// ... {1,2}
+var list_b = new LList;
+// ... {3,4}
 
-list.concat( anotherList ); // merge the list with another list (from LList)
+list_a.concat( list_b );  // {1,2,3,4}
+list_a.reverse();         // {4,3,2,1}
+list_a.sort();            // {1,2,3,4}
+```
 
-var node = list.search( 1 );  // search and return the first node which data value matches
+- List utilities
+> **search()** Search and returns the first node which data non strictly equals the search value  
+> **getLastNode()** Returns the last node in the list  
+> **forEach()** Iterates over the complete list as long as no non-undefined return occurs.
+```js
+var list = new LList;
+// ... {1,2,3,4}
 
-list.reverse(); // reverses the list
+list.search( 2 );   // returns the second node
+list.getLastNode(); // returns the last node
 
-list.sort();  // sorts the list (a < b)
-
-var lastNode = list.getLastNode();  // returns the last node of the list
-
-list.forEach( function( node, index ) { // iterate over the list
- // node the current node
- // the current node index
- /// A return statement which does NOT return undefined
- /// stops the loop and forEach will return the given value!
+list.forEach(function( node, index ) {  
+  // node: the current node
+  // index: the current node index
+  /// A return; statement which does NOT return undefined
+  /// stops the loop and forEach() will return the return value!
 });
-
 ```

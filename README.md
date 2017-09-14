@@ -1,23 +1,44 @@
 # LList.js
 
-Javascript doubly linked list class
+Doubly linked list class
 
-## Usage
 
+## Documentation
+
+- List properties
+> **head** The first node in the list
+> **count** The list node count
 ```js
 var list = new LList;
+list.head;
+list.count;
+```
 
-list.count; // the node count
-list.head; // the first node in the list
+- Adding nodes
+> **push()** Add a node at the end of the list
+> **unshift()** Add a node at the beginning of the list
+```js
+var list = new LList;
+list.push( 1 );    // {1}
+list.unshift( 2 ); // {2,1}
+```
 
-list.push( 1 );     // add a node at the end of the list
-list.unshift( 2 );  // add a node at the beginning of the list
+- Removing nodes
+> **pop()** remove and return the last node
+> **shift()** remove and return the first node
+> **remove()** remove nodes by its data value
+```js
+                  // {1,2,5,2,4}
+list.pop();       // {1,2,5,2}
+list.shift();     // {2,5,2}
+list.remove( 2 ); // {5} 
+// list.remove( 2, 1 ); // {5,2}
+// by passing a second {Number} argument you can set the maximum of remove operations allowed
+```
 
-var poped = list.pop();     // remove the last node
-var shifted = list.shift(); // remove the first node
 
-list.remvoe( 1 );     // remove all nodes with the given data value
-list.remove( 1, 2 );  // remove a maximum of 2 nodes with the given data value
+
+```js
 
 list.concat( anotherList ); // merge the list with another list (from LList)
 

@@ -26,15 +26,6 @@
 		};
 	}
 	
-	/*
-	 * checks if the the input arg is a valid LList reference
-	 * @param {Object: LList} list
-	 * @return {Boolean}
-	 */
-	function isList( list ) {
-		
-	}
-	
 	// LList constructor
 	var LList = function() {
 		this.head = null;
@@ -181,9 +172,10 @@
 	};
 	
 	/*
-	 * Returns the first node whose data matches
-	 * @param {*} data The search value to match a node's data
-	 * @return {Object|Null} A LList node or null
+	 * Creates creates a new LList with all nodes that pass the test implemented by the provided function.
+	 * @param {Function} callback The filter function to test each node of the list return true to keep the node otherwise false
+	 * @param {Object} thisArg Optional to use as this when executing callback
+	 * @return {Object} A new LList
 	 */
 	LList.prototype.filter = function( callback, thisArg ) {
 		thisArg = ( thisArg && typeof thisArg === "object" ) ? thisArg : null;
@@ -249,6 +241,11 @@
 		});
 	};
 	
+	/*
+	 * checks if the the input arg is a valid LList reference
+	 * @param {Object: LList} list
+	 * @return {Boolean}
+	 */
 	LList.prototype.isList = function( list ) {
 		return ( Object.getPrototypeOf( list ) === LList.prototype ) ? true : false;
 	};
@@ -262,5 +259,4 @@
 	global.LList = LList;
 	
 });
-
 

@@ -32,7 +32,7 @@
 	 * @return {Boolean}
 	 */
 	function isList( list ) {
-		return ( Object.getPrototypeOf( list ) === LList.prototype ) ? true : false;
+		
 	}
 	
 	// LList constructor
@@ -165,7 +165,7 @@
 	 * @param {Object: List} list A LList object reference
 	 */
 	LList.prototype.concat = function( list ) {
-		if ( !isList( list ) ) {
+		if ( !this.isList( list ) ) {
 			throw "LList::concat: invalid LList:list argument";
 		}
 		if ( !list.head ) return;
@@ -178,18 +178,43 @@
 			this.head = list.head;
 			this.count = list.count;
 		}
-	}
+	};
 	
 	/*
 	 * Returns the first node whose data matches
-	 * @param {*} data The 
+	 * @param {*} data The search value to match a node's data
+	 * @return {Object|Null} A LList node or null
+	 */
+	LList.prototype.filter = function( callback, thisArg ) {
+		thisArg = ( thisArg && typeof thisArg === "object" ) ? thisArg : null;
+		var nList = new LList;
+		this.forEach(function( node, index ) {
+			if ( callback.call( thisArg, node, index ) ) {
+				nList.push( node.data );
+			}
+		});
+		return nList;
+	};
+	
+	/*
+	 * Returns the first node whose data matches
+	 * @param {*} data The search value to match a node's data
 	 * @return {Object|Null} A LList node or null
 	 */
 	LList.prototype.search = function( data ) {
 		return this.forEach( function( node ) {
-			if ( node.data == data ) {
-				return node;
-			}
+			if ( node.data == data ) return node;
+		}) || null;
+	};
+	
+	/*
+	 * Returns the node at the given list index
+	 * @param {Number} _index The node list index
+	 * @return {Object|Null} A LList node or null
+	 */
+	LList.prototype.searchIndex = function( _index ) {
+		return this.forEach( function( node, index ) {
+			if ( index == _index ) return node;
 		}) || null;
 	};
 	
@@ -224,6 +249,10 @@
 		});
 	};
 	
+	LList.prototype.isList = function( list ) {
+		return ( Object.getPrototypeOf( list ) === LList.prototype ) ? true : false;
+	};
+	
 	if ( noGlobal ) {
 		// return LList for export
 		return LList;
@@ -233,3 +262,5 @@
 	global.LList = LList;
 	
 });
+
+

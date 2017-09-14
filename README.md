@@ -80,7 +80,7 @@ var filteredList = list.fiter(function( node, index ) {
 - Static methods
 > **isList()** Determines whether the passed value is an LList
 ```js
-var list = LList;
+var list = new LList;
 LList.isList( list );     // true
 LList.isList( [1,2,3] );  // false
 ```

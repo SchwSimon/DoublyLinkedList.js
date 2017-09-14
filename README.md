@@ -55,7 +55,7 @@ list_a.sort();            // {1,2,3,4}
 - List utilities
 > **search()** Search and returns the first node which data non strictly equals the search value  
 > **getLastNode()** Returns the last node in the list  
-> **forEach()** Iterates over the complete list as long as no non-undefined return occurs.
+> **forEach()** Iterates over the complete list as long as no non-undefined return occurs.  
 > **filter()** Creates a new LList with all nodes that pass the test implemented by the provided function
 ```js
 var list = new LList;

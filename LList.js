@@ -156,7 +156,7 @@
 	 * @param {Object: List} list A LList object reference
 	 */
 	LList.prototype.concat = function( list ) {
-		if ( !this.isList( list ) ) {
+		if ( !LList.isList( list ) ) {
 			throw "LList::concat: invalid LList:list argument";
 		}
 		if ( !list.head ) return;
@@ -246,7 +246,7 @@
 	 * @param {Object: LList} list
 	 * @return {Boolean}
 	 */
-	LList.prototype.isList = function( list ) {
+	LList.isList = function( list ) {
 		return ( Object.getPrototypeOf( list ) === LList.prototype ) ? true : false;
 	};
 	

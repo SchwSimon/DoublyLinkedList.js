@@ -5,7 +5,7 @@ Doubly linked list class
 
 ## Documentation
 
-- List properties
+- LList properties
 > **head** The first node in the list  
 > **count** The list node count
 ```js

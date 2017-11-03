@@ -15,72 +15,66 @@ list.count;
 ```
 
 - Adding nodes
-> **push()** Add a node at the end of the list  
-> **unshift()** Add a node at the beginning of the list
+> **push()** Add nodes at the end of the list  
+> **unshift()** Add nodes at the beginning of the list
 ```js
 var list = new LList;
-list.push( 1 );    // {1}
-list.unshift( 2 ); // {2,1}
+list.push(1);         // 1
+list.push(2,3,4);     // 1,2,3,4
+list.unshift(5);      // 5,1,2,3,4
+list.unshift(6,7,8);  // 8,7,6,5,1,2,3,4
 ```
 
 - Removing nodes
 > **pop()** remove and return the last node  
 > **shift()** remove and return the first node  
-> **remove()** remove nodes by its data value
+> **remove(search[, max])** remove all nodes matching the search value
 ```js
 var list = new LList;
-// ... {1,2,5,2,4}
-list.pop();       // {1,2,5,2}
-list.shift();     // {2,5,2}
-list.remove( 2 ); // {5} 
-// list.remove( 2, 1 ); // {5,2}
-// by passing a second {Number} argument you can set the maximum of remove operations allowed
+// ...add 1,2,3,4,5
+list.pop();       // 1,2,3,4
+list.shift();     // 2,3,4
+list.remove(3);   // 2,4
 ```
 
 - Manipulating list
-> **concat()** merge an LList with another one  
+> **concat(llist)** merge an LList with another one  
 > **reverse()** reverse the list  
-> **sort()** sort the list (a < b)
+> **sort(compFunc)** sort the list
 ```js
 var list_a = new LList;
-// ... {1,2}
+// ...add 1,2
 var list_b = new LList;
-// ... {3,4}
+// ...add 3,4
 
-list_a.concat( list_b );  // {1,2,3,4}
-list_a.reverse();         // {4,3,2,1}
-list_a.sort();            // {1,2,3,4}
+list_a.concat(list_b);        // 1,2,3,4
+list_a.reverse();             // 4,3,2,1
+list_a.sort((a, b) => a > b); // 1,2,3,4
+  // this is the default compare function
 ```
 
 - List utilities
-> **search()** Search and returns the first node which data non strictly equals the search value  
 > **getLastNode()** Returns the last node in the list  
-> **forEach()** Iterates over the complete list as long as no non-undefined return occurs.  
-> **filter()** Creates a new LList with all nodes that pass the test implemented by the provided function
+> **find(search[, fromIndex])** Return the first node which data strictly equals the search value
+> **findIndex(index[, fromIndex])** Return the index node
+> **forEach(callback[, thisArg])** Iterate over the complete list
+> **filter(filterFunc[, thisArg])** Return a new LList instance with only the nodes which passed the filter function
 ```js
 var list = new LList;
-// ... {1,2,3,4}
+// ...add 1,2,3,4
 
-list.search( 2 );   // returns the second node
-list.getLastNode(); // returns the last node
+list.getLastNode();   // last node (data:4)
+list.find(2);         // second node (data:2)
+list.find(2, 2);      // null
+list.findIndex(0);    // first node (data:1)
+list.findIndex(0, 1); // second node (data:2)
 
-list.forEach(function( node, index ) {  
+list.forEach((node, index) => {  
   // node: the current node
   // index: the current node index
-  /// A return; statement which does NOT return undefined
-  /// stops the loop and forEach() will return the return value!
 });
 
-var filteredList = list.fiter(function( node, index ) {
+var filteredList = list.fiter((node, index) {
   return node.data <= 2;
-}/* [, thisArg] */);
-// filteredList: {1,2}
-```
-
-- Static methods
-> **isList()** Determines whether the passed value is an LList
-```js
-var list = new LList;
-LList.isList( list );     // true
-LList.isList( [1,2,3] );  // false
+}); // 1,2
 ```

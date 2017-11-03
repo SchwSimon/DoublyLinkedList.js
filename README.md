@@ -55,10 +55,10 @@ list_a.sort((a, b) => a > b); // 1,2,3,4
 
 - List utilities
 > **getLastNode()** Returns the last node in the list  
-> **find(search[, fromIndex])** Return the first node which data strictly equals the search value
-> **findIndex(index[, fromIndex])** Return the index node
-> **forEach(callback[, thisArg])** Iterate over the complete list
-> **filter(filterFunc[, thisArg])** Return a new LList instance with only the nodes which passed the filter function
+> **find(search[, fromIndex])** Return the first node which data strictly equals the search value  
+> **findIndex(index[, fromIndex])** Return the index node  
+> **forEach(callback[, thisArg])** Iterate over the complete list  
+> **filter(filterFunc[, thisArg])** Return a new LList instance with only the nodes which passed the filter function  
 ```js
 var list = new LList;
 // ...add 1,2,3,4

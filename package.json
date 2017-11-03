@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Linked list Class",
   "main": "./LList.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha"
-  },
+
   "repository": {
     "type": "git",
     "url": "https://github.com/SchwSimon/LList.js"

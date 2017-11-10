@@ -14,8 +14,5 @@
     "linked-list"
   ],
   "author": "Simon S.",
-  "license": "ISC",
-  "devDependencies": {
-    "mocha": "^4.0.1"
-  }
+  "license": "ISC"
 }

@@ -4,10 +4,7 @@
   "description": "Linked list Class",
   "main": "./LList.js",
   "scripts": {
-    "test": "mocha",
-  },
-  "devDependencies": {
-    "mocha": ">=1.0.0",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,5 +14,8 @@
     "linked-list"
   ],
   "author": "Simon S.",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
 }

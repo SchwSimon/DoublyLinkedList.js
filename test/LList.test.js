@@ -1,3 +1,5 @@
+'use strict';
+
 const test = require('unit.js');
 const _LLIST_ = require( "../LList.js" );
 

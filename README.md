@@ -1,3 +1,6 @@
+
+![Travis Build](https://travis-ci.org/SchwSimon/LList.js.svg?branch=master)
+
 # LList.js
 
 Doubly linked list class

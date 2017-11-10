@@ -16,6 +16,7 @@
   "author": "Simon S.",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "unit.js": "^2.0.0"
   }
 }

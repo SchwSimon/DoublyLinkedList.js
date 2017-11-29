@@ -1,83 +1,81 @@
+# DoublyLinkedList.js
 
-![Travis Build](https://travis-ci.org/SchwSimon/LList.js.svg?branch=master)
+[![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/dbly-linked-list-js)
+![Travis build](https://travis-ci.org/SchwSimon/LList.js.svg?branch=master)
+[![License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat)](https://opensource.org/licenses/ISC)
 
-# LList.js
+Class to create and handle doubly linked lists
 
-Doubly linked list class
+## Installation
 
-
-## Documentation
-
-- LList properties
-> **head** The first node in the list  
-> **count** The list node count
-```js
-var list = new LList;
-list.head;
-list.count;
+```sh
+npm install dbly-linked-list-js --save
 ```
 
-- Adding nodes
-> **push()** Add nodes at the end of the list  
-> **unshift()** Add nodes at the beginning of the list
+### Default node structure
+
 ```js
-var list = new LList;
-list.push(1);         // 1
-list.push(2,3,4);     // 1,2,3,4
-list.unshift(5);      // 5,1,2,3,4
-list.unshift(6,7,8);  // 8,7,6,5,1,2,3,4
+{
+  data: "some data",  // some data
+  prev: null,         // node object or null
+  next: null          // node object or null
+}
 ```
 
-- Removing nodes
-> **pop()** remove and return the last node  
-> **shift()** remove and return the first node  
-> **remove(search[, max])** remove all nodes matching the search value
+### Usage
+
 ```js
-var list = new LList;
-// ...add 1,2,3,4,5
-list.pop();       // 1,2,3,4
-list.shift();     // 2,3,4
-list.remove(3);   // 2,4
-```
+const DoublyLinkedList = require('dbly-linked-list-js');
 
-- Manipulating list
-> **concat(llist)** merge an LList with another one  
-> **reverse()** reverse the list  
-> **sort(compFunc)** sort the list
-```js
-var list_a = new LList;
-// ...add 1,2
-var list_b = new LList;
-// ...add 3,4
+const dll = new BinarySearchTree;
+dll.head; 	// the head node
+dll.count;  // the node count
 
-list_a.concat(list_b);        // 1,2,3,4
-list_a.reverse();             // 4,3,2,1
-list_a.sort((a, b) => a > b); // 1,2,3,4
-  // this is the default compare function
-```
+  // adding nodes
+list.push(1);
+list.push(2,[],{},"f");   // add multiple nodes at once
+list.unshift(5);
+list.unshift(2,[],{},"f");// head node will be the one with the value "f" here
 
-- List utilities
-> **getLastNode()** Returns the last node in the list  
-> **find(search[, fromIndex])** Return the first node which data strictly equals the search value  
-> **findIndex(index[, fromIndex])** Return the index node  
-> **forEach(callback[, thisArg])** Iterate over the complete list  
-> **filter(filterFunc[, thisArg])** Return a new LList instance with only the nodes which passed the filter function  
-```js
-var list = new LList;
-// ...add 1,2,3,4
+  // removing nodes
+list.pop();       // returns the removed node
+list.shift();     // ..
+list.remove(3);   // remove nodes by its data value
+list.remove(3, 1);// limit the remove operations
 
-list.getLastNode();   // last node (data:4)
-list.find(2);         // second node (data:2)
-list.find(2, 2);      // null
-list.findIndex(0);    // first node (data:1)
-list.findIndex(0, 1); // second node (data:2)
+  // list manipulation
+list.concat(anotherListInstance); // append the list by setting
+                                  // the head node of the input list
+                                  // as the next node of the last node from the current list
 
-list.forEach((node, index) => {  
+list.reverse(); // reverse the list
+
+list.sort((a, b) => a.data > b.data); // sort the list by passing a compare function
+                                      // the example compare function is used by default
+
+  // list utils
+list.getLastNode();   // return the last node in the list
+
+list.find(2);         // return the node with the data value 2
+list.find(3, 4);      // return the node with the data value 3
+                      // beginning at the node with the index 4
+
+list.findIndex(5);    // return the node with the index 5
+list.findIndex(6, 2); // return the node with the index 6
+                      // beginning at the node with the index 2
+
+  // iterate over the list by proving a callback function
+list.forEach((node, index) => {
   // node: the current node
   // index: the current node index
-});
+}, thisArg);  // optional argument to use as this in the iteration function
 
-var filteredList = list.fiter((node, index) {
-  return node.data <= 2;
-}); // 1,2
+  // filter the list by providing a filter function
+  // returns a new instance of the class
+  // containing a list of nodes which passed the filter function
+list.fiter((node, index) => {
+  // node: the current node
+  // index: the current node index
+  return node.data > 2;
+}, thisArg);  // optional argument to use as this in the iteration function
 ```

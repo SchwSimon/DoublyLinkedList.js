@@ -1,7 +1,7 @@
 # DoublyLinkedList.js
 
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/dbly-linked-list-js)
-![Travis build](https://travis-ci.org/SchwSimon/LList.js.svg?branch=master)
+![Travis build](https://travis-ci.org/SchwSimon/DoublyLinkedList.js.svg?branch=master)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg?style=flat)](https://opensource.org/licenses/ISC)
 
 Class to create and handle doubly linked lists
